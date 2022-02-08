@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Pet
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1 class="display-5">Edit Info for {{pet.name}}</h1>
+    <img src=" {{pet.photo_url}}" class="img-fluid">
+    <ul>
+        <li><b>Name:</b> {{pet.name}}</li>
+        <li><b>Species:</b> {{pet.species}}</li>
+        <li><b>Age:</b> {{pet.age}}</li>
+        <li><b>Availablity:</b> {% if pet.available %}
+            {{pet.name}} <b>is available</b> for adoption!
+            {% else %}
+            {{pet.name}} <b>is not available</b> for adoption.
+            {% endif %}</li>
+    </ul>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {% for field in form
+        if field.widget.input_type != 'hidden' %}
+        <tr>
+            {% if field.type == "BooleanField" %}
+            <td></td>
+            <td>{{ field }} {{ field.label }}</td>
+            {% else %}
+            <td>{{ field.label }}</td>
+            <td>{{ field (class_="form-control") }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+        <div>
+            <button class="btn btn-success">Save</button>
+            <a href="/" class="btn btn-outline-dark">Go Back</a>
+        </div>
+    </form>
+    <!-- <a href="/pets/{{pet.id}}/details" class="btn btn-sm btn-outline-dark">Edit {{pet.name}}'s details</a> -->
+</div>
+{% endblock %}
